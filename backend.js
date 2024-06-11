@@ -1,67 +1,63 @@
-const express = require('express')
-const app = express()
-const mysql = require('mysql2')
-const porta = 4000
+const express = require('express');
+const app = express();
+const porta = 4000;
 const cors = require('cors');
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
-const db = mysql.createPool({
-    host: "localhost",
-    user: "root",
-    password: "2006",
-    database: "invest",
-    port: 3306
-});
-
 app.use(cors());
 app.use(express.json());
 
-app.post("/add", (req,res) => {
-    const {Nome} = req.body
-    const {Price} = req.body
-    const {Option} = req.body
-
-    const sqldata = "INSERT INTO investapp(nome, price, opcao) VALUES (?,?,?)";
-
-    db.query(sqldata, [Nome, Price, Option], (err, result) => {
-    if(err) {
-        console.log(err) 
-    } else {
-        console.log(result)
+app.post("/add", async (req, res) => {
+    const { Nome, Price, Option } = req.body;
+    try {
+        const newInvestapp = await prisma.investapp.create({
+            data: {
+                nome: Nome,
+                price: Price,
+                opcao: Option,
+            },
+        });
+        res.send(newInvestapp);
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Ocorreu um erro ao adicionar os dados");
     }
-    })
 });
 
-app.delete("/delete/:id", (req, res) => {
+app.delete("/delete/:id", async (req, res) => {
     const { id } = req.params;
-    const sqlDelete = "DELETE FROM investapp WHERE id = ?";
-
-    db.query(sqlDelete, id, (err, result) => {
-        if(err) {
-            console.log(err);
-        } else {
-            res.send(result);
-        }
-    });
+    try {
+        const deleteInvestapp = await prisma.investapp.delete({
+            where: { id: parseInt(id) },
+        });
+        res.send(deleteInvestapp);
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Ocorreu um erro ao deletar os dados");
+    }
 });
 
-app.put("/NewDados/:id", (req, res) => {
-    const id = req.params.id;
+app.put("/NewDados/:id", async (req, res) => {
+    const { id } = req.params;
     const { NewNome, NewNumero, NewSelectType } = req.body;
-  
-    const sqlUpdate = "UPDATE investapp SET nome = ?, price = ?, opcao = ? WHERE id = ?";
-  
-    db.query(sqlUpdate, [NewNome, NewNumero, NewSelectType, id], (err, result) => {
-      if (err) {
-        console.log(err);
-      } else {
-        res.send(result);
-      }
-    });
-  });
+    try {
+        const updateInvestapp = await prisma.investapp.update({
+            where: { id: parseInt(id) },
+            data: {
+                nome: NewNome,
+                price: NewNumero,
+                opcao: NewSelectType,
+            },
+        });
+        res.send(updateInvestapp);
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Ocorreu um erro ao atualizar os dados");
+    }
+});
 
-  app.get("/dados", async (req, res) => {
+app.get("/dados", async (req, res) => {
     try {
         const investapps = await prisma.investapp.findMany();
         res.send(investapps);
@@ -71,7 +67,6 @@ app.put("/NewDados/:id", (req, res) => {
     }
 });
 
-
 app.listen(porta, () => {
-    console.log(`rodando na porta ${porta}`);
-})
+    console.log(`Servidor rodando na porta ${porta}`);
+});
