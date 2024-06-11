@@ -12,7 +12,7 @@
       "headers": [
         {
           "key": "Access-Control-Allow-Origin",
-          "value": "https://api-invest.vercel.app"
+          "value": "http://localhost:3000/criarprojeto"
         },
         {
           "key": "Access-Control-Allow-Methods",
