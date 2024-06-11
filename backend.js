@@ -3,6 +3,8 @@ const app = express()
 const mysql = require('mysql2')
 const porta = 4000
 const cors = require('cors');
+const { PrismaClient } = require('@prisma/client');
+const prisma = new PrismaClient();
 
 const db = mysql.createPool({
     host: "localhost",
@@ -59,17 +61,15 @@ app.put("/NewDados/:id", (req, res) => {
     });
   });
 
-app.get("/dados", (req,res) => {
-    const sqldata = "SELECT * FROM investapp";
-
-    db.query(sqldata,(err,result) => {
-        if(err) {
-            console.log(err);
-        } else {
-            res.send(result);
-        }
-    })
-})
+  app.get("/dados", async (req, res) => {
+    try {
+        const investapps = await prisma.investapp.findMany();
+        res.send(investapps);
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Ocorreu um erro ao buscar os dados");
+    }
+});
 
 
 app.listen(porta, () => {
