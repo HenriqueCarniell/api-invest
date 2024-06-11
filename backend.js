@@ -20,6 +20,13 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.json())
 
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+    next();
+  });
+  
+
 app.post("/add", (req,res) => {
     const {Nome} = req.body
     const {Price} = req.body
