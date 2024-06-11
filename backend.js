@@ -11,20 +11,10 @@ const db = mysql.createPool({
     database: "invest",
     port: 3306
 });
-
-const corsOptions = {
-    origin: 'http://localhost:3000',
-    optionsSuccessStatus: 200
-  };
   
-app.use(cors(corsOptions));
+
 app.use(express.json())
 
-app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
-    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-    next();
-  });
   
 
 app.post("/add", (req,res) => {
