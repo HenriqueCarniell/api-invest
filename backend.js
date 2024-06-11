@@ -12,11 +12,7 @@ const db = mysql.createPool({
     port: 3306
 });
 
-app.use(cors({
-    origin: "http://localhost:3000",
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization']
-  }));
+app.use(cors());
 app.use(express.json())
 
 app.post("/add", (req,res) => {
