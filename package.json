@@ -4,7 +4,8 @@
   },
   "scripts": {
     "start": "node backend.js",
-    "vercel-build": "npx prisma migrate deploy"
+    "build": "prisma generate",
+    "vercel-build": "npm run build"
   },
   "dependencies": {
     "@prisma/client": "^5.15.0",
