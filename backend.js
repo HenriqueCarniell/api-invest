@@ -13,7 +13,7 @@ const db = mysql.createPool({
 });
 
 app.use(cors({
-    origin: 'https://api-invest.vercel.app',
+    origin: "https://api-invest.vercel.app/dados",
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization']
   }));
