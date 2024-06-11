@@ -21,7 +21,7 @@ app.post("/add", async (req, res) => {
         res.send(newInvestapp);
     } catch (err) {
         console.error(err);
-        res.status(500).send("Ocorreu um erro ao adicionar os dados");
+        res.send("Ocorreu um erro ao adicionar os dados");
     }
 });
 
@@ -34,7 +34,7 @@ app.delete("/delete/:id", async (req, res) => {
         res.send(deleteInvestapp);
     } catch (err) {
         console.error(err);
-        res.status(500).send("Ocorreu um erro ao deletar os dados");
+        res.send("Ocorreu um erro ao deletar os dados");
     }
 });
 
@@ -53,7 +53,7 @@ app.put("/NewDados/:id", async (req, res) => {
         res.send(updateInvestapp);
     } catch (err) {
         console.error(err);
-        res.status(500).send("Ocorreu um erro ao atualizar os dados");
+        res.send("Ocorreu um erro ao atualizar os dados");
     }
 });
 
@@ -63,7 +63,7 @@ app.get("/dados", async (req, res) => {
         res.send(investapps);
     } catch (err) {
         console.error(err);
-        res.status(500).send("Ocorreu um erro ao buscar os dados");
+        res.send("Ocorreu um erro ao buscar os dados");
     }
 });
 
