@@ -18,7 +18,7 @@ app.post("/add", async (req, res) => {
                 opcao: Option,
             },
         });
-        res.send(newInvestapp);
+        res.json(newInvestapp);
     } catch (err) {
         console.error(err);
         res.send("Ocorreu um erro ao adicionar os dados");
@@ -31,7 +31,7 @@ app.delete("/delete/:id", async (req, res) => {
         const deleteInvestapp = await prisma.investapp.delete({
             where: { id: parseInt(id) },
         });
-        res.send(deleteInvestapp);
+        res.json(deleteInvestapp);
     } catch (err) {
         console.error(err);
         res.send("Ocorreu um erro ao deletar os dados");
@@ -50,7 +50,7 @@ app.put("/NewDados/:id", async (req, res) => {
                 opcao: NewSelectType,
             },
         });
-        res.send(updateInvestapp);
+        res.json(updateInvestapp);
     } catch (err) {
         console.error(err);
         res.send("Ocorreu um erro ao atualizar os dados");
@@ -60,7 +60,7 @@ app.put("/NewDados/:id", async (req, res) => {
 app.get("/dados", async (req, res) => {
     try {
         const investapps = await prisma.investapp.findMany();
-        res.send(investapps);
+        res.json(investapps);
     } catch (err) {
         console.error(err);
         res.send("Ocorreu um erro ao buscar os dados");
