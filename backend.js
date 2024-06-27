@@ -9,11 +9,11 @@ let env = require('dotenv').config();
 console.log(env.error)
 
 const pool = new Pool({
-  user: 'seu_usuario',
-  host: 'localhost',
-  database: 'seu_banco_de_dados',
-  password: 'sua_senha',
-  port: 5432,
+  user: process.env.DB_USER,
+  host: process.env.DB_HOST,
+  database: process.env.DB_DATABASE,
+  password: process.env.DB_PASSWORD,
+  port: process.env.DB_PORT,
 });
 
 app.use(cors());
